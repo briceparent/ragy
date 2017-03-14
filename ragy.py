@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import random
 import re
 import string
@@ -40,6 +41,12 @@ class Message:
         self.message = self._texts[message_id].format(code)
         self.icon = self._icons[message_id].format(code)
 
+    def unset_message(self):
+        self.message_type = ""
+        self.message = ""
+        self.icon = ""
+
+
 
 displayed_message = Message()
 
@@ -57,7 +64,9 @@ def get_unique_id():
 @route('/')
 def show():
     context = {'message': displayed_message, 'next_id': get_unique_id()}
-    return template('index', context)
+    ret = template('index', context)
+    displayed_message.unset_message()
+    return ret
 
 
 @post("/generate")
