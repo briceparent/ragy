@@ -2,7 +2,9 @@ import random
 import re
 import string
 
-from bottle import Bottle, route, template, HTTPError, post, redirect, request
+from bottle import Bottle, route, template, run, post, redirect, request
+
+import settings
 
 from db import DatabaseManager
 
@@ -90,3 +92,7 @@ def show(id):
 
     displayed_message.set_message("error_404", id)
     redirect('/', 302)
+
+
+# Launching the server
+run(host=settings.SERVER_URL, port=settings.SERVER_PORT)
