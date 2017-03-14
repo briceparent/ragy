@@ -14,16 +14,19 @@ class Message:
     _texts = dict(
         error_wrong_format="Le format du lien court <strong>{}</strong> n'est pas valide.",
         error_exists="Le lien court <strong>{}</strong> est déjà attribué à une autre url",
+        error_404="Le page demandée n'existe pas !",
         success="Votre lien <strong>http://ra.gy/{}</strong> a été créé avec succès !"
     )
     _types = dict(
         error_wrong_format="danger",
         error_exists="danger",
+        error_404="danger",
         success="success"
     )
     _icons = dict(
         error_wrong_format="",
         error_exists="",
+        error_404="",
         success="http://chart.apis.google.com/chart?chs=80x80&cht=qr&chld=Q|0&chl=http://ra.gy/{}"
     )
     message = ""
@@ -85,4 +88,5 @@ def show(id):
         db.add_access(id=id)
         return redirect(link['link'], 301)
 
-    return HTTPError(404, "Page not found")
+    displayed_message.set_message("error_404", id)
+    redirect('/', 302)
